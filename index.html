@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+
+<script>
+  /*
+   * ============================================================
+   * CONFIGURAÇÃO DOS DESTINOS
+   * ============================================================
+   *
+   * AU = Austrália
+   * US = Estados Unidos
+   * CA = Canadá
+   */
+
+  const destinos = {
+    AU: "https://www.site-australia.com/",
+    US: "https://www.site-eua.com/",
+    CA: "https://www.site-canada.com/"
+  };
+
+  /*
+   * Destino padrão:
+   * usado quando:
+   * - não for possível descobrir o país;
+   * - a API falhar;
+   * - o país não estiver cadastrado acima.
+   */
+
+  const destinoPadrao = "https://www.google.com.br/";
+
+
+  /*
+   * ============================================================
+   * REDIRECIONAMENTO
+   * ============================================================
+   */
+
+  async function redirecionarPorPais() {
+
+    try {
+
+      /*
+       * A API identifica o país pelo IP público
+       * do visitante.
+       *
+       * O retorno esperado é algo como:
+       *
+       * AU
+       * US
+       * CA
+       * BR
+       */
+
+      const resposta = await fetch(
+        "https://ipapi.co/country/",
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+
+      /*
+       * Se a API responder com erro,
+       * utiliza o destino padrão.
+       */
+
+      if (!resposta.ok) {
+        throw new Error("Falha na consulta de localização.");
+      }
+
+
+      /*
+       * Obtém o código do país.
+       */
+
+      const pais = (await resposta.text())
+        .trim()
+        .toUpperCase();
+
+
+      /*
+       * Verifica se existe um destino
+       * configurado para esse país.
+       */
+
+      const destino = destinos[pais] || destinoPadrao;
+
+
+      /*
+       * Redireciona o visitante.
+       */
+
+      window.location.replace(destino);
+
+    } catch (erro) {
+
+      /*
+       * Qualquer problema:
+       * vai para o destino padrão.
+       */
+
+      console.error(
+        "Não foi possível identificar o país:",
+        erro
+      );
+
+      window.location.replace(destinoPadrao);
+    }
+  }
+
+
+  /*
+   * Inicia o processo.
+   */
+
+  redirecionarPorPais();
+
+</script>
+
+</body>
+</html>
