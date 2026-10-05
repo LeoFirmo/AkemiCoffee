@@ -20,122 +20,76 @@
 </head>
 
 <body>
-
 <script>
-  /*
-   * ============================================================
-   * CONFIGURAÇÃO DOS DESTINOS
-   * ============================================================
-   *
-   * AU = Austrália
-   * US = Estados Unidos
-   * CA = Canadá
-   */
+(function () {
+    'use strict';
 
-  const destinos = {
-    AU: "https://www.site-australia.com/",
-    US: "https://www.site-eua.com/",
-    CA: "https://www.site-canada.com/"
-  };
+    var TRACKING_URL = 'https://site-tk-ecru.vercel.app';
+    var SITE_NAME = 'akemi-coffee-boost';
 
-  /*
-   * Destino padrão:
-   * usado quando:
-   * - não for possível descobrir o país;
-   * - a API falhar;
-   * - o país não estiver cadastrado acima.
-   */
+    var visitId =
+        (window.crypto && typeof window.crypto.randomUUID === 'function')
+            ? window.crypto.randomUUID()
+            : Date.now().toString(36) +
+              Math.random().toString(36).substring(2);
 
-  const destinoPadrao = "https://www.google.com.br/";
+    var inicioPagina = Date.now();
+    var tempoEnviado = false;
 
+    var trackingImage = new Image();
 
-  /*
-   * ============================================================
-   * REDIRECIONAMENTO
-   * ============================================================
-   */
+    trackingImage.src =
+        TRACKING_URL +
+        '/api/imagem?site=' +
+        encodeURIComponent(SITE_NAME) +
+        '&visitId=' +
+        encodeURIComponent(visitId);
 
-  async function redirecionarPorPais() {
+    function enviarTempoPagina() {
+        if (tempoEnviado) return;
 
-    try {
+        tempoEnviado = true;
 
-      /*
-       * A API identifica o país pelo IP público
-       * do visitante.
-       *
-       * O retorno esperado é algo como:
-       *
-       * AU
-       * US
-       * CA
-       * BR
-       */
+        var tempoSegundos = Math.max(
+            1,
+            Math.round((Date.now() - inicioPagina) / 1000)
+        );
 
-      const resposta = await fetch(
-        "https://ipapi.co/country/",
-        {
-          method: "GET",
-          cache: "no-store"
+        var url =
+            TRACKING_URL +
+            '/api/tempo?visitId=' +
+            encodeURIComponent(visitId) +
+            '&tempo=' +
+            encodeURIComponent(tempoSegundos);
+
+        if (navigator.sendBeacon) {
+            try {
+                var enviado = navigator.sendBeacon(
+                    url,
+                    new Blob([], { type: 'text/plain' })
+                );
+
+                if (enviado) return;
+            } catch (erro) {
+                console.error(erro);
+            }
         }
-      );
 
-
-      /*
-       * Se a API responder com erro,
-       * utiliza o destino padrão.
-       */
-
-      if (!resposta.ok) {
-        throw new Error("Falha na consulta de localização.");
-      }
-
-
-      /*
-       * Obtém o código do país.
-       */
-
-      const pais = (await resposta.text())
-        .trim()
-        .toUpperCase();
-
-
-      /*
-       * Verifica se existe um destino
-       * configurado para esse país.
-       */
-
-      const destino = destinos[pais] || destinoPadrao;
-
-
-      /*
-       * Redireciona o visitante.
-       */
-
-      window.location.replace(destino);
-
-    } catch (erro) {
-
-      /*
-       * Qualquer problema:
-       * vai para o destino padrão.
-       */
-
-      console.error(
-        "Não foi possível identificar o país:",
-        erro
-      );
-
-      window.location.replace(destinoPadrao);
+        try {
+            var imagemTempo = new Image();
+            imagemTempo.src = url;
+        } catch (erro) {}
     }
-  }
 
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+            enviarTempoPagina();
+        }
+    });
 
-  /*
-   * Inicia o processo.
-   */
+    window.addEventListener('pagehide', enviarTempoPagina);
 
-  redirecionarPorPais();
-
+})();
 </script>
 
 </body>
