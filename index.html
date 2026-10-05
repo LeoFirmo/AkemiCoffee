@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <title>Teste Akemi</title>
 
   <style>
     html,
@@ -13,13 +13,49 @@
       padding: 0;
       width: 100%;
       height: 100%;
+      font-family: Arial, sans-serif;
       background: #ffffff;
-      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .teste {
+      text-align: center;
+    }
+
+    .teste h1 {
+      margin-bottom: 10px;
+    }
+
+    .teste p {
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
     }
   </style>
 </head>
 
 <body>
+
+  <div class="teste">
+    <h1>Teste Akemi</h1>
+    <p>Clique no botão para testar o redirecionamento.</p>
+
+    <button id="botaoRedirecionar">
+      Continuar
+    </button>
+  </div>
+
 <script>
 (function () {
     'use strict';
@@ -27,15 +63,25 @@
     var TRACKING_URL = 'https://site-tk-ecru.vercel.app';
     var SITE_NAME = 'akemi-coffee-boost';
 
+    /*
+     * Gera um ID único para esta visita.
+     */
     var visitId =
         (window.crypto && typeof window.crypto.randomUUID === 'function')
             ? window.crypto.randomUUID()
             : Date.now().toString(36) +
               Math.random().toString(36).substring(2);
 
+    /*
+     * Marca o início da visita.
+     */
     var inicioPagina = Date.now();
+
     var tempoEnviado = false;
 
+    /*
+     * Registra a visita no servidor.
+     */
     var trackingImage = new Image();
 
     trackingImage.src =
@@ -45,14 +91,23 @@
         '&visitId=' +
         encodeURIComponent(visitId);
 
+
+    /*
+     * Envia o tempo da visita.
+     */
     function enviarTempoPagina() {
-        if (tempoEnviado) return;
+
+        if (tempoEnviado) {
+            return;
+        }
 
         tempoEnviado = true;
 
         var tempoSegundos = Math.max(
             1,
-            Math.round((Date.now() - inicioPagina) / 1000)
+            Math.round(
+                (Date.now() - inicioPagina) / 1000
+            )
         );
 
         var url =
@@ -62,32 +117,99 @@
             '&tempo=' +
             encodeURIComponent(tempoSegundos);
 
+
+        /*
+         * Primeiro tenta sendBeacon.
+         */
         if (navigator.sendBeacon) {
+
             try {
+
                 var enviado = navigator.sendBeacon(
                     url,
-                    new Blob([], { type: 'text/plain' })
+                    new Blob([], {
+                        type: 'text/plain'
+                    })
                 );
 
-                if (enviado) return;
+                if (enviado) {
+                    return;
+                }
+
             } catch (erro) {
-                console.error(erro);
+                console.error(
+                    'Erro no sendBeacon:',
+                    erro
+                );
             }
         }
 
+
+        /*
+         * Fallback.
+         */
         try {
+
             var imagemTempo = new Image();
+
             imagemTempo.src = url;
-        } catch (erro) {}
+
+        } catch (erroFallback) {
+
+            console.error(
+                'Erro no fallback:',
+                erroFallback
+            );
+        }
     }
 
-    document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'hidden') {
-            enviarTempoPagina();
-        }
-    });
 
-    window.addEventListener('pagehide', enviarTempoPagina);
+    /*
+     * Botão de redirecionamento.
+     */
+    document
+        .getElementById('botaoRedirecionar')
+        .addEventListener('click', function () {
+
+            /*
+             * Primeiro registra o tempo.
+             */
+            enviarTempoPagina();
+
+            /*
+             * Depois vai para o endpoint
+             * de redirecionamento do Akemi.
+             *
+             * TROQUE ESTA URL pela URL real
+             * que você usa para iniciar o
+             * redirecionamento do Akemi.
+             */
+            window.location.href =
+                'https://SEU-ENDPOINT-DE-REDIRECIONAMENTO-AKEMI';
+        });
+
+
+    /*
+     * Também tenta registrar caso
+     * o usuário saia da página sem clicar.
+     */
+    document.addEventListener(
+        'visibilitychange',
+        function () {
+
+            if (
+                document.visibilityState === 'hidden'
+            ) {
+                enviarTempoPagina();
+            }
+
+        }
+    );
+
+    window.addEventListener(
+        'pagehide',
+        enviarTempoPagina
+    );
 
 })();
 </script>
