@@ -1,218 +1,2347 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-AU">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teste Akemi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akemi Coffee Boost</title>
+    <meta name="description"
+        content="Explore Akemi Coffee Boost in Australia, a convenient drink mix designed to fit into your daily coffee or beverage routine. Learn about the formula, ingredients, how to use it, shipping and the 30-day money-back guarantee.">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="author" content="Akemi Coffee Boost">
+    <meta name="language" content="en-AU">
+    <meta name="geo.region" content="AU">
+    <meta name="geo.country" content="Australia">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Akemi Coffee Boost Australia | Daily Coffee Drink Mix">
+    <meta property="og:description"
+        content="Learn about Akemi Coffee Boost, its listed ingredients, everyday use, shipping information and 30-day money-back guarantee.">
+    <meta property="og:locale" content="en_AU">
+    <meta name="twitter:card" content="summary">
 
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-    }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    .teste {
-      text-align: center;
-    }
-
-    .teste h1 {
-      margin-bottom: 10px;
-    }
-
-    .teste p {
-      margin-bottom: 25px;
-    }
-
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-    }
-  </style>
 </head>
 
-<body>
+<style>
+    /* =========================================================
+   COOKIE MODAL
+   ========================================================= */
 
-  <div class="teste">
-    <h1>Teste Akemi</h1>
-    <p>Clique no botão para testar o redirecionamento.</p>
+    html.cookie-locked,
+    body.cookie-locked {
+        overflow: hidden !important;
+    }
 
-    <button id="botaoRedirecionar">
-      Continuar
-    </button>
-  </div>
+    .cookie-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, .55);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
 
-<script>
-(function () {
-    'use strict';
+    .cookie-modal {
+        position: relative;
+        width: min(520px, 100%);
+        padding: 34px 36px 30px;
+        border: 1px solid rgba(33, 23, 15, .10);
+        border-radius: 18px;
+        background: #fff;
+        color: #21170f;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-    var TRACKING_URL = 'https://site-tk-ecru.vercel.app';
-    var SITE_NAME = 'akemi-coffee-boost';
+    .cookie-close {
+        position: absolute;
+        top: 10px;
+        right: 11px;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: #70675f;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background .15s ease, color .15s ease;
+    }
 
-    /*
-     * Gera um ID único para esta visita.
-     */
-    var visitId =
-        (window.crypto && typeof window.crypto.randomUUID === 'function')
-            ? window.crypto.randomUUID()
-            : Date.now().toString(36) +
-              Math.random().toString(36).substring(2);
+    .cookie-close:hover {
+        background: #f4efe9;
+        color: #21170f;
+    }
 
-    /*
-     * Marca o início da visita.
-     */
-    var inicioPagina = Date.now();
+    .cookie-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 17px;
+        border-radius: 50%;
+        background: #f5ead9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        line-height: 1;
+    }
 
-    var tempoEnviado = false;
+    .cookie-modal h3 {
+        margin: 0 35px 11px;
+        font-size: 26px;
+        line-height: 1.15;
+        letter-spacing: -.6px;
+        font-weight: 800;
+    }
 
-    /*
-     * Registra a visita no servidor.
-     */
-    var trackingImage = new Image();
+    .cookie-modal p {
+        margin: 0 auto 23px;
+        max-width: 430px;
+        color: #5f574f;
+        font-size: 14px;
+        line-height: 1.65;
+    }
 
-    trackingImage.src =
-        TRACKING_URL +
-        '/api/imagem?site=' +
-        encodeURIComponent(SITE_NAME) +
-        '&visitId=' +
-        encodeURIComponent(visitId);
+    .cookie-actions {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+    }
 
+    .cookie-btn {
+        flex: 1 1 0;
+        min-height: 52px;
+        padding: 11px 14px;
+        border-radius: 9px;
+        font-size: 14px;
+        line-height: 1.15;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+    }
 
-    /*
-     * Envia o tempo da visita.
-     */
-    function enviarTempoPagina() {
+    .cookie-btn:hover {
+        transform: translateY(-1px);
+        opacity: .96;
+    }
 
-        if (tempoEnviado) {
-            return;
+    .cookie-btn:active {
+        transform: translateY(0);
+    }
+
+    .cookie-accept {
+        border: 1px solid #21170f;
+        background: #21170f;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, .13);
+    }
+
+    .cookie-reject {
+        border: 1px solid #21170f;
+        background: #fff;
+        color: #21170f;
+    }
+
+    @media (max-width:600px) {
+        .cookie-overlay {
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
         }
 
-        tempoEnviado = true;
+        .cookie-modal {
+            width: 100%;
+            max-width: 356px;
+            padding: 28px 18px 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(33, 23, 15, .10);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .30);
+        }
 
-        var tempoSegundos = Math.max(
-            1,
-            Math.round(
-                (Date.now() - inicioPagina) / 1000
-            )
-        );
+        .cookie-icon {
+            width: 58px;
+            height: 58px;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
 
-        var url =
+        .cookie-modal h3 {
+            margin: 0 28px 10px;
+            font-size: 22px;
+            letter-spacing: -.4px;
+        }
+
+        .cookie-modal p {
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            line-height: 1.65;
+        }
+
+        .cookie-actions {
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .cookie-btn {
+            width: 100%;
+            min-height: 48px;
+            padding: 10px 8px;
+            font-size: 13px;
+        }
+
+        .cookie-close {
+            top: 8px;
+            right: 9px;
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    @media (max-width:360px) {
+        .cookie-overlay {
+            padding: 20px;
+        }
+
+        .cookie-modal {
+            max-width: 340px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        margin: 0;
+        background: #fff;
+        color: #111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    ul,
+    ol {
+        list-style: none;
+    }
+
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .site-header {
+        height: 60px;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        z-index: 20;
+    }
+
+    .header-inner {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        text-decoration: none;
+    }
+
+    .header-logo img {
+        display: block;
+        width: auto;
+        height: 34px;
+    }
+
+    .menu-button {
+        width: 42px;
+        height: 42px;
+        padding: 7px;
+        border: 0;
+        background: transparent;
+        color: #21170f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .menu-button svg {
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+
+    /* =========================================================
+       DESKTOP NAV - HIDDEN ON MOBILE
+    ========================================================= */
+
+    .desktop-nav {
+        display: none;
+    }
+
+    .desktop-order {
+        display: none;
+    }
+
+
+    /* =========================================================
+       HERO - MOBILE ORIGINAL
+    ========================================================= */
+
+    .hero {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 22px 13px 15px;
+        text-align: center;
+    }
+
+
+    /* =========================================================
+       RATING
+    ========================================================= */
+
+    .rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 4px;
+        font-size: 14px;
+        line-height: 1.2;
+        margin-bottom: 13px;
+    }
+
+    .rating strong {
+        font-weight: 700;
+    }
+
+    .stars {
+        display: inline-flex;
+        gap: 2px;
+        color: #fff;
+        background: #00b67a;
+        padding: 2px 3px;
+        line-height: 1;
+    }
+
+    .stars span {
+        font-size: 11px;
+    }
+
+
+    /* =========================================================
+       HEADLINE
+    ========================================================= */
+
+    .hero h1 {
+        margin: 0 0 12px;
+        /* font-size: 38px; */
+        font-size: 38px;
+        line-height: .98;
+        letter-spacing: -1.7px;
+        font-weight: 400;
+    }
+
+    .hero h1 strong {
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       HERO IMAGE
+    ========================================================= */
+
+    .hero-image {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 14px;
+        margin-bottom: 14px;
+    }
+
+    .hero-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+    /* =========================================================
+       SUBTITLE
+    ========================================================= */
+
+    .hero-subtitle {
+        margin: 0 8px 17px;
+        font-size: 17px;
+        line-height: 1.42;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       BENEFITS
+    ========================================================= */
+
+    .benefits {
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto 14px;
+        text-align: left;
+    }
+
+    .benefit {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        font-size: 18px;
+        line-height: 1.25;
+        margin-bottom: 8px;
+    }
+
+    .check {
+        flex: 0 0 18px;
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        border-radius: 50%;
+        background: #20bf68;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       URGENCY
+    ========================================================= */
+
+    .urgency {
+        min-height: 37px;
+        width: 100%;
+        padding: 7px 10px;
+        border: 1px solid #ccc;
+        border-radius: 9px;
+        background: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-size: 12px;
+        line-height: 1.2;
+        color: #222;
+        margin-bottom: 9px;
+    }
+
+    .urgency .fire {
+        font-size: 15px;
+    }
+
+
+    /* =========================================================
+       CTA
+    ========================================================= */
+
+    .cta {
+        width: 100%;
+        min-height: 55px;
+        padding: 0 14px;
+        border-radius: 11px;
+        background: #f9ad47;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 18px;
+        font-weight: 800;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, .12);
+    }
+
+    .cta-arrow {
+        width: 31px;
+        height: 31px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .32);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 400;
+    }
+
+
+    /* =========================================================
+       STOCK
+    ========================================================= */
+
+    .stock-status {
+        margin-top: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        flex-wrap: wrap;
+        font-size: 11px;
+        color: #222;
+    }
+
+    .stock-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #79db88;
+        box-shadow: 0 0 0 3px #e7f8e9;
+    }
+
+    .stock-separator {
+        margin: 0 2px;
+    }
+
+    .stock-bars {
+        display: inline-flex;
+        gap: 2px;
+        margin-left: 3px;
+    }
+
+    .stock-bars i {
+        display: block;
+        width: 10px;
+        height: 8px;
+        border-radius: 2px;
+        background: #d7d7d7;
+    }
+
+    .stock-bars i:first-child {
+        background: #ef3d24;
+    }
+
+    .stock-low {
+        color: #ef3d24;
+        font-weight: 800;
+        margin-left: 2px;
+    }
+
+
+    /* =========================================================
+       MOBILE ADJUSTMENTS
+       NÃO ALTERADO
+    ========================================================= */
+
+    @media (max-width: 380px) {
+
+        .hero {
+            padding-left: 11px;
+            padding-right: 11px;
+        }
+
+        .hero h1 {
+            font-size: 35px;
+        }
+
+        .benefit {
+            font-size: 17px;
+        }
+
+        .cta {
+            font-size: 17px;
+        }
+    }
+
+
+    /* =========================================================
+       ANNOUNCEMENT BARS
+    ========================================================= */
+
+    .announcebar {
+        background: #26180C;
+        color: #fff;
+        padding: 7px 16px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .announce-track {
+        display: flex;
+        width: max-content;
+        animation: announce-scroll 18s linear infinite;
+    }
+
+    .announce-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        padding-right: 50px;
+        flex-shrink: 0;
+        padding: 3px 30px;
+    }
+
+    .announce-group span {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    .announce-group svg {
+        color: #C8722F;
+        flex-shrink: 0;
+    }
+
+    .announce-group p {
+        margin: 0;
+    }
+
+    @keyframes announce-scroll {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+
+    /* =========================================================
+       DESKTOP
+       TUDO A PARTIR DAQUI É EXCLUSIVO DO DESKTOP.
+       MOBILE NÃO É ALTERADO.
+    ========================================================= */
+
+    @media (min-width: 769px) {
+
+        /* -----------------------------------------------------
+           TOP GREEN BAR
+        ----------------------------------------------------- */
+
+        .announcebar[data-screen-label="01 Announce"]:first-of-type {
+            height: 35px !important;
+            padding: 0 16px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .announcebar[data-screen-label="01 Announce"]:first-of-type>div {
+            height: 100%;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+
+        /* -----------------------------------------------------
+           DARK BENEFIT BAR
+        ----------------------------------------------------- */
+
+        .announcebar:not(:first-of-type) {
+            height: 39px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .announcebar:not(:first-of-type) .announce-track {
+            width: 100%;
+            animation: none;
+            justify-content: center;
+        }
+
+        .announcebar:not(:first-of-type) .announce-group {
+            gap: 50px;
+            padding: 0;
+        }
+
+        .announcebar:not(:first-of-type) .announce-group:nth-child(2) {
+            display: none;
+        }
+
+        .announcebar:not(:first-of-type) .announce-group span {
+            font-size: 13px;
+            gap: 9px;
+        }
+
+
+        /* -----------------------------------------------------
+           HEADER
+        ----------------------------------------------------- */
+
+        .site-header {
+            height: 76px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-inner {
+            width: min(1240px, calc(100% - 60px));
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .header-logo img {
+            height: 43px;
+        }
+
+        .menu-button {
+            display: none;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 88px;
+            margin-left: auto;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: #111;
+            font-size: 16px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .desktop-nav a:hover {
+            opacity: .7;
+        }
+
+        .desktop-order {
+            margin-left: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 137px;
+            height: 43px;
+            padding: 0 19px;
+            border-radius: 7px;
+            background: #f9ad47;
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 800;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, .10);
+            white-space: nowrap;
+        }
+
+        .desktop-order span {
+            margin-left: 7px;
+            font-size: 19px;
+            line-height: 1;
+        }
+
+
+        /* -----------------------------------------------------
+           DESKTOP HERO CONTAINER
+        ----------------------------------------------------- */
+
+        .hero {
+            position: relative;
+            width: 100%;
+            max-width: none;
+            min-height: 613px;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            background: #f5ead9;
+            overflow: hidden;
+        }
+
+
+        /* -----------------------------------------------------
+           RIGHT HERO IMAGE
+        ----------------------------------------------------- */
+
+        .hero-image {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            width: 47.7%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+
+        /* -----------------------------------------------------
+           LEFT CONTENT
+           1240px CONTAINER EFFECT
+        ----------------------------------------------------- */
+
+        .rating,
+        .hero h1,
+        .hero-subtitle,
+        .benefits,
+        .urgency,
+        .cta,
+        .stock-status {
+
+            position: relative;
+            z-index: 3;
+            width: 480px;
+            max-width: 480px;
+            margin-left: max(30px, calc((100vw - 1240px) / 2));
+        }
+
+
+        /* -----------------------------------------------------
+           RATING
+        ----------------------------------------------------- */
+
+        .rating {
+            padding-top: 43px;
+            margin-bottom: 16px;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 5px;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .rating>span:first-of-type {
+            display: inline-flex !important;
+            gap: 3px !important;
+            align-items: center;
+        }
+
+        .rating>span:first-of-type svg {
+            width: 14px !important;
+            height: 14px !important;
+            flex: 0 0 14px;
+        }
+
+        .rating>span:last-child {
+            white-space: nowrap;
+        }
+
+
+        /* -----------------------------------------------------
+           DESKTOP HEADLINE
+        ----------------------------------------------------- */
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: .98;
+            letter-spacing: -2.4px;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 13px;
+        }
+
+        .hero h1 strong {
+            font-weight: 800;
+        }
+
+        @media (min-width: 769px) {
+            .hero {
+                width: 100%;
+                min-height: calc(100vh - 150px);
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+
+        /* -----------------------------------------------------
+           SUBTITLE
+        ----------------------------------------------------- */
+
+        .hero-subtitle {
+            margin-top: 0;
+            margin-bottom: 17px;
+            margin-right: 0;
+            margin-left: max(30px, calc((100vw - 1240px) / 2));
+            font-size: 19px;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+
+        /* -----------------------------------------------------
+           BENEFITS
+        ----------------------------------------------------- */
+
+        .benefits {
+            width: 480px;
+            max-width: 480px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            margin-left: max(30px, calc((100vw - 1240px) / 2));
+        }
+
+        .benefit {
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+            line-height: 1.2;
+            margin-bottom: 9px;
+        }
+
+        .check {
+            flex: 0 0 20px;
+            width: 20px;
+            height: 20px;
+            margin-top: 0;
+            font-size: 13px;
+        }
+
+
+        /* -----------------------------------------------------
+           URGENCY
+        ----------------------------------------------------- */
+
+        .urgency {
+            width: 480px;
+            min-height: 42px;
+            margin-top: 0;
+            margin-bottom: 9px;
+            padding: 7px 12px;
+            border-radius: 9px;
+            background: #e9dfcf;
+            border: 1px solid #cfc4b2;
+            justify-content: flex-start;
+            gap: 7px;
+            font-size: 13px;
+        }
+
+        .urgency .fire {
+            font-size: 17px;
+            flex: 0 0 auto;
+        }
+
+
+        /* -----------------------------------------------------
+           CTA
+        ----------------------------------------------------- */
+
+        .cta {
+            width: 480px;
+            min-height: 76px;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0 25px;
+            border-radius: 10px;
+            justify-content: center;
+            gap: 12px;
+            font-size: 27px;
+            line-height: 1;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, .10);
+        }
+
+        .cta-arrow {
+            width: 34px;
+            height: 34px;
+            font-size: 25px;
+        }
+
+
+        /* -----------------------------------------------------
+           STOCK
+        ----------------------------------------------------- */
+
+        .stock-status {
+            width: 480px;
+            margin-top: 14px;
+            margin-bottom: 0;
+            justify-content: flex-start;
+            gap: 5px;
+            flex-wrap: nowrap;
+            font-size: 14px;
+        }
+
+        .stock-dot {
+            width: 10px;
+            height: 10px;
+        }
+
+        .stock-bars {
+            gap: 3px;
+            margin-left: 4px;
+        }
+
+        .stock-bars i {
+            width: 14px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .stock-low {
+            margin-left: 4px;
+        }
+    }
+
+
+    /* =========================================================
+       DESKTOP - TELAS MENORES
+       Ajuste para notebooks sem afetar mobile.
+    ========================================================= */
+
+    @media (min-width: 769px) and (max-width: 1300px) {
+
+        .header-inner {
+            width: calc(100% - 40px);
+        }
+
+        .desktop-nav {
+            gap: 45px;
+        }
+
+        .desktop-order {
+            margin-left: 35px;
+        }
+
+        .hero-image {
+            width: 46%;
+        }
+
+        .rating,
+        .hero h1,
+        .hero-subtitle,
+        .benefits,
+        .urgency,
+        .cta,
+        .stock-status {
+            margin-left: 40px;
+        }
+
+        .hero h1 {
+            font-size: 47px;
+        }
+
+        .cta {
+            width: 460px;
+        }
+
+        .urgency,
+        .benefits,
+        .stock-status {
+            width: 460px;
+        }
+    }
+
+
+    /* =========================================================
+       DESKTOP - TELAS GRANDES
+    ========================================================= */
+
+    /* @media (min-width: 1600px) {
+
+        .hero {
+            min-height: 613px;
+        }
+
+        .hero-image {
+            width: 47.7%;
+        }
+    } */
+
+    /* =========================================================
+       INFORMATION SECTIONS
+    ========================================================= */
+
+    .info-wrap {
+        width: 100%;
+        background: #fff;
+        color: #21170f;
+    }
+
+    .info-section {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 64px 0;
+    }
+
+    .info-section+.info-section {
+        border-top: 1px solid #eee7df;
+    }
+
+    .info-kicker {
+        margin-bottom: 9px;
+        color: #9a5b24;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .info-section h2 {
+        margin: 0 0 16px;
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1.05;
+        letter-spacing: -1.3px;
+    }
+
+    .info-section h3 {
+        margin: 0 0 9px;
+        font-size: 21px;
+        line-height: 1.2;
+    }
+
+    .info-section p {
+        margin: 0;
+        max-width: 760px;
+        color: #5f574f;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 30px;
+    }
+
+    .info-card {
+        padding: 24px;
+        border: 1px solid #e9dfd4;
+        border-radius: 14px;
+        background: #fffaf5;
+    }
+
+    .info-card p {
+        font-size: 15px;
+    }
+
+    .ingredient-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-top: 28px;
+    }
+
+    .ingredient {
+        padding: 20px;
+        border: 1px solid #e9dfd4;
+        border-radius: 12px;
+        background: #fff;
+    }
+
+    .ingredient strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 17px;
+    }
+
+    .ingredient span {
+        color: #655c53;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 30px;
+        counter-reset: steps;
+    }
+
+    .step {
+        position: relative;
+        padding: 24px;
+        border-radius: 14px;
+        background: #f5ead9;
+    }
+
+    .step-number {
+        display: inline-flex;
+        width: 32px;
+        height: 32px;
+        margin-bottom: 18px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #21170f;
+        color: #fff;
+        font-weight: 800;
+    }
+
+    .note {
+        margin-top: 24px !important;
+        padding: 16px 18px;
+        border-left: 3px solid #c8722f;
+        background: #faf7f2;
+        font-size: 14px !important;
+    }
+
+    .faq-list {
+        margin-top: 28px;
+        border-top: 1px solid #e9dfd4;
+    }
+
+    .faq {
+        padding: 20px 0;
+        border-bottom: 1px solid #e9dfd4;
+    }
+
+    .faq h3 {
+        font-size: 17px;
+    }
+
+    .faq p {
+        font-size: 15px;
+    }
+
+    .guarantee {
+        padding: 28px;
+        border-radius: 16px;
+        background: #f5ead9;
+    }
+
+    .disclaimer {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 50px;
+        color: #6b6259;
+        font-size: 12px;
+        line-height: 1.65;
+        text-align: center;
+    }
+
+    .info-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        margin-top: 24px;
+        padding: 0 24px;
+        border-radius: 9px;
+        background: #f9ad47;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+    @media (max-width: 700px) {
+        .info-section {
+            padding: 46px 0;
+        }
+
+        .info-grid,
+        .ingredient-list,
+        .steps {
+            grid-template-columns: 1fr;
+        }
+
+        .info-section h2 {
+            font-size: 32px;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        'use strict';
+
+        var TRACKING_URL = 'https://site-tk-ecru.vercel.app';
+        var SITE_NAME = 'akemi-coffee-boost';
+
+        var visitId =
+            (window.crypto && typeof window.crypto.randomUUID === 'function')
+                ? window.crypto.randomUUID()
+                : Date.now().toString(36) +
+                Math.random().toString(36).substring(2);
+
+        var inicioPagina = Date.now();
+        var tempoEnviado = false;
+
+        /*
+         * Registra a abertura da página.
+         */
+        var trackingImage = new Image();
+
+        trackingImage.src =
             TRACKING_URL +
-            '/api/tempo?visitId=' +
-            encodeURIComponent(visitId) +
-            '&tempo=' +
-            encodeURIComponent(tempoSegundos);
+            '/api/imagem?site=' +
+            encodeURIComponent(SITE_NAME) +
+            '&visitId=' +
+            encodeURIComponent(visitId);
 
 
         /*
-         * Primeiro tenta sendBeacon.
+         * Registra o tempo.
          */
-        if (navigator.sendBeacon) {
+        function enviarTempoPagina() {
+
+            if (tempoEnviado) {
+                return;
+            }
+
+            tempoEnviado = true;
+
+            var tempoSegundos = Math.max(
+                1,
+                Math.round(
+                    (Date.now() - inicioPagina) / 1000
+                )
+            );
+
+            var url =
+                TRACKING_URL +
+                '/api/tempo?visitId=' +
+                encodeURIComponent(visitId) +
+                '&tempo=' +
+                encodeURIComponent(tempoSegundos);
+
+            if (navigator.sendBeacon) {
+                try {
+                    var enviado = navigator.sendBeacon(
+                        url,
+                        new Blob([], {
+                            type: 'text/plain'
+                        })
+                    );
+
+                    if (enviado) {
+                        return;
+                    }
+                } catch (erro) {
+                    console.error(
+                        'Erro no sendBeacon:',
+                        erro
+                    );
+                }
+            }
 
             try {
+                var imagemTempo = new Image();
+                imagemTempo.src = url;
+            } catch (erroFallback) {
+                console.error(
+                    'Erro no fallback:',
+                    erroFallback
+                );
+            }
+        }
 
-                var enviado = navigator.sendBeacon(
-                    url,
-                    new Blob([], {
-                        type: 'text/plain'
-                    })
+
+        /*
+         * Quando o visitante sair da página.
+         */
+        document.addEventListener(
+            'visibilitychange',
+            function () {
+                if (document.visibilityState === 'hidden') {
+                    enviarTempoPagina();
+                }
+            }
+        );
+
+        window.addEventListener(
+            'pagehide',
+            enviarTempoPagina
+        );
+
+
+        /*
+         * Para links/botões da página que levam
+         * para a oferta.
+         *
+         * Adicione a classe:
+         *
+         * class="akemi-oferta"
+         *
+         * nos links/botões que devem redirecionar.
+         */
+        document.addEventListener(
+            'click',
+            function (event) {
+
+                var elemento = event.target.closest(
+                    '.akemi-oferta'
                 );
 
-                if (enviado) {
+                if (!elemento) {
                     return;
                 }
 
-            } catch (erro) {
-                console.error(
-                    'Erro no sendBeacon:',
-                    erro
-                );
-            }
-        }
+                event.preventDefault();
 
-
-        /*
-         * Fallback.
-         */
-        try {
-
-            var imagemTempo = new Image();
-
-            imagemTempo.src = url;
-
-        } catch (erroFallback) {
-
-            console.error(
-                'Erro no fallback:',
-                erroFallback
-            );
-        }
-    }
-
-
-    /*
-     * Botão de redirecionamento.
-     */
-    document
-        .getElementById('botaoRedirecionar')
-        .addEventListener('click', function () {
-
-            /*
-             * Primeiro registra o tempo.
-             */
-            enviarTempoPagina();
-
-            /*
-             * Depois vai para o endpoint
-             * de redirecionamento do Akemi.
-             *
-             * TROQUE ESTA URL pela URL real
-             * que você usa para iniciar o
-             * redirecionamento do Akemi.
-             */
-            window.location.href =
-                'https://site-tk-ecru.vercel.app/api/go?product=akemi-coffee-boost&site=akemi-coffee-boost';
-        });
-
-
-    /*
-     * Também tenta registrar caso
-     * o usuário saia da página sem clicar.
-     */
-    document.addEventListener(
-        'visibilitychange',
-        function () {
-
-            if (
-                document.visibilityState === 'hidden'
-            ) {
                 enviarTempoPagina();
+
+                window.location.href =
+                    'https://site-tk-ecru.vercel.app/api/go?product=akemi-coffee-boost&site=akemi-coffee-boost';
             }
+        );
 
-        }
-    );
-
-    window.addEventListener(
-        'pagehide',
-        enviarTempoPagina
-    );
-
-})();
+    })();
 </script>
 
+
+<body>
+
+
+    <!-- =====================================================
+         TOP GREEN BAR
+    ====================================================== -->
+
+    <div class="announcebar" data-screen-label="01 Announce"
+        style="background:#a5e99a;color:#111313;padding:7px 16px;height:auto;line-height:1.3">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-wrap:nowrap;
+            gap:8px;
+            font-size:13px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.04em;
+            color:#111313;
+            white-space:nowrap;
+            overflow:hidden;
+        ">
+
+            <span style="color:#111313">
+                Save Up To 70%
+            </span>
+
+            <span style="color:#111313;font-weight:400;font-size:11px">
+                |
+            </span>
+
+            <span style="color:#111313">
+                Limited Time Offer
+            </span>
+
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         BENEFIT BAR
+    ====================================================== -->
+
+    <div class="announcebar" data-screen-label="01 Announce">
+
+        <div class="announce-track">
+
+            <!-- CONJUNTO 1 -->
+
+            <div class="announce-group">
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M12 2l8 3v6c0 5-3 8.5-8 11-4.5-2.5-8-6-8-11V5z"></path>
+                        <path d="M9 12l2 2 4-4"></path>
+
+                    </svg>
+
+                    <p>Convenient Drink Mix</p>
+
+                </span>
+
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M1 4h12v11H1zM13 8h4l3 3v4h-7z"></path>
+
+                        <circle cx="6" cy="18" r="1.6"></circle>
+
+                        <circle cx="17" cy="18" r="1.6"></circle>
+
+                    </svg>
+
+                    <p>Fast Shipping</p>
+
+                </span>
+
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M21 12V7H5a2 2 0 010-4h14v4"></path>
+
+                        <path d="M3 5v14a2 2 0 002 2h16v-5"></path>
+
+                        <path d="M18 12a2 2 0 000 4h4v-4z"></path>
+
+                    </svg>
+
+                    <p>30-Day Money-Back</p>
+
+                </span>
+
+            </div>
+
+
+            <!-- CONJUNTO 2 -->
+
+            <div class="announce-group">
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M12 2l8 3v6c0 5-3 8.5-8 11-4.5-2.5-8-6-8-11V5z"></path>
+                        <path d="M9 12l2 2 4-4"></path>
+
+                    </svg>
+
+                    <p>Convenient Drink Mix</p>
+
+                </span>
+
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M1 4h12v11H1zM13 8h4l3 3v4h-7z"></path>
+
+                        <circle cx="6" cy="18" r="1.6"></circle>
+
+                        <circle cx="17" cy="18" r="1.6"></circle>
+
+                    </svg>
+
+                    <p>Fast Shipping</p>
+
+                </span>
+
+
+                <span>
+
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M21 12V7H5a2 2 0 010-4h14v4"></path>
+
+                        <path d="M3 5v14a2 2 0 002 2h16v-5"></path>
+
+                        <path d="M18 12a2 2 0 000 4h4v-4z"></path>
+
+                    </svg>
+
+                    <p>30-Day Money-Back</p>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a href="#" class="header-logo" aria-label="Akemi">
+
+                <img src="./logo-image-1-dcdad643.webp" alt="Akemi" fetchpriority="high" decoding="async">
+
+            </a>
+
+
+            <!-- MOBILE MENU -->
+
+            <button class="menu-button" aria-label="Open menu">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                    <path d="M3 6h18M3 12h18M3 18h18"></path>
+
+                </svg>
+
+            </button>
+
+
+            <!-- DESKTOP NAV -->
+
+            <nav class="desktop-nav">
+
+                <a href="#features">
+                    Features
+                </a>
+
+                <a href="#how-it-works">
+                    How It Works
+                </a>
+
+                <a href="#reviews">
+                    Reviews
+                </a>
+
+                <a href="#faqs">
+                    FAQs
+                </a>
+
+            </nav>
+
+
+            <!-- DESKTOP CTA -->
+
+            <a href="https://buyakemicoffeeboost.com/2/order/en/au/checkout-now-v7.php?C1=1926" class="desktop-order"
+                rel="nofollow sponsored">
+
+                Order Now
+
+                <span>→</span>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main class="hero" id="top">
+
+
+        <!-- RATING -->
+
+        <div class="rating">
+
+            <strong>
+                Excellent
+            </strong>
+
+
+            <span style="display:inline-flex;gap:3px">
+
+                <svg width="13" height="13" viewBox="0 0 24 24">
+
+                    <rect width="24" height="24" rx="3" fill="#00B67A">
+                    </rect>
+
+                    <polygon points="12,4 14.2,9.5 20,9.8 15.5,13.6 17.1,19.5 12,16.2 6.9,19.5 8.5,13.6 4,9.8 9.8,9.5"
+                        fill="white">
+                    </polygon>
+
+                </svg>
+
+
+                <svg width="13" height="13" viewBox="0 0 24 24">
+
+                    <rect width="24" height="24" rx="3" fill="#00B67A">
+                    </rect>
+
+                    <polygon points="12,4 14.2,9.5 20,9.8 15.5,13.6 17.1,19.5 12,16.2 6.9,19.5 8.5,13.6 4,9.8 9.8,9.5"
+                        fill="white">
+                    </polygon>
+
+                </svg>
+
+
+                <svg width="13" height="13" viewBox="0 0 24 24">
+
+                    <rect width="24" height="24" rx="3" fill="#00B67A">
+                    </rect>
+
+                    <polygon points="12,4 14.2,9.5 20,9.8 15.5,13.6 17.1,19.5 12,16.2 6.9,19.5 8.5,13.6 4,9.8 9.8,9.5"
+                        fill="white">
+                    </polygon>
+
+                </svg>
+
+
+                <svg width="13" height="13" viewBox="0 0 24 24">
+
+                    <rect width="24" height="24" rx="3" fill="#00B67A">
+                    </rect>
+
+                    <polygon points="12,4 14.2,9.5 20,9.8 15.5,13.6 17.1,19.5 12,16.2 6.9,19.5 8.5,13.6 4,9.8 9.8,9.5"
+                        fill="white">
+                    </polygon>
+
+                </svg>
+
+
+                <svg width="13" height="13" viewBox="0 0 24 24">
+
+                    <rect width="24" height="24" rx="3" fill="#00B67A">
+                    </rect>
+
+                    <polygon points="12,4 14.2,9.5 20,9.8 15.5,13.6 17.1,19.5 12,16.2 6.9,19.5 8.5,13.6 4,9.8 9.8,9.5"
+                        fill="white">
+                    </polygon>
+
+                </svg>
+
+            </span>
+
+
+            <span>
+                Customer rating information
+            </span>
+
+        </div>
+
+
+        <!-- HEADLINE -->
+
+        <h1>
+
+            <strong>
+                Fight Fat with Your
+            </strong>
+
+            <br>
+
+            Daily Coffee
+
+        </h1>
+
+
+        <!-- HERO IMAGE -->
+
+        <div class="hero-image">
+
+            <img src="./coffeeboost-au-nz-lp-hero-image-1.webp" alt="Akemi Coffee Boost product presentation"
+                fetchpriority="high" decoding="async">
+
+        </div>
+
+
+        <!-- SUBTITLE -->
+
+        <p class="hero-subtitle">
+
+            A convenient drink mix designed to fit easily into your everyday beverage routine.
+
+        </p>
+
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+
+            <div class="benefit">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <span>
+                    Daily Coffee Drink Mix
+                </span>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <span>
+                    Simple to Add to Your Routine
+                </span>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <span>
+                    Easy to Mix Into Hot or Cold Drinks
+                </span>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <span>
+                    Made With a Blend of Listed Ingredients
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- URGENCY -->
+
+        <div class="urgency">
+
+            <span class="fire">
+                🔥
+            </span>
+
+            <span>
+                Current offer details and availability are shown at checkout
+            </span>
+
+        </div>
+
+
+        <!-- CTA -->
+
+        <a href="https://buyakemicoffeeboost.com/2/order/en/au/checkout-now-v7.php?C1=1926" class="cta"
+            rel="nofollow sponsored">
+
+            <span>
+                VIEW CURRENT OFFER
+            </span>
+
+            <span class="cta-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- STOCK -->
+
+        <div class="stock-status">
+
+            <span class="stock-dot"></span>
+
+            <span>
+                Available for Australian customers
+            </span>
+
+
+            <span class="stock-separator">
+                |
+            </span>
+
+
+            <span>
+                Offer details
+            </span>
+
+
+            <span class="stock-bars">
+
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+
+            </span>
+
+
+            <strong class="stock-low">VIEW OFFER</strong>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         AUSTRALIA INFORMATION CONTENT
+         Conservative product information for paid traffic.
+    ====================================================== -->
+
+    <div class="info-wrap">
+
+        <section class="info-section" id="features">
+            <div class="info-kicker">Akemi Coffee Boost Australia</div>
+            <h2>A simple addition to your daily coffee routine</h2>
+            <p>
+                Akemi Coffee Boost is presented as a convenient drink mix that can be added to a
+                familiar beverage. The product information supplied for this page describes a blend
+                of plant-derived ingredients and a sachet format designed for simple everyday use.
+            </p>
+
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>Easy daily format</h3>
+                    <p>Add the contents of a sachet to a beverage and stir. The supplied product material
+                        describes use with coffee, tea, water or smoothies, either hot or cold.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Designed for convenience</h3>
+                    <p>The sachet format avoids measuring and is intended to make adding the product
+                        to an existing beverage routine straightforward.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Clear product information</h3>
+                    <p>Review the listed ingredients, directions, shipping information and guarantee
+                        before deciding whether the product is right for you.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="info-section" id="how-it-works">
+            <div class="info-kicker">How It Works</div>
+            <h2>How to use Akemi Coffee Boost</h2>
+            <p>
+                The supplied product information describes a simple three-step format. Always follow
+                the product label and the instructions provided with your order.
+            </p>
+
+            <div class="steps">
+                <article class="step">
+                    <span class="step-number">1</span>
+                    <h3>Open a sachet</h3>
+                    <p>Use one sachet as directed on the product packaging.</p>
+                </article>
+
+                <article class="step">
+                    <span class="step-number">2</span>
+                    <h3>Add to your drink</h3>
+                    <p>The supplied information describes mixing it into coffee, tea, water or a smoothie.</p>
+                </article>
+
+                <article class="step">
+                    <span class="step-number">3</span>
+                    <h3>Stir and enjoy</h3>
+                    <p>Stir until incorporated, then continue with your normal beverage routine.</p>
+                </article>
+            </div>
+
+            <p class="note">
+                Product use, serving information and suitability should be confirmed on the packaging
+                supplied with your order. This page does not replace product directions or professional advice.
+            </p>
+        </section>
+
+        <section class="info-section" id="ingredients">
+            <div class="info-kicker">Ingredients</div>
+            <h2>What is listed in the formula?</h2>
+            <p>
+                The product material supplied for this page lists seven ingredients. The descriptions
+                below are intentionally limited to identifying the listed ingredients rather than making
+                medical or guaranteed outcome claims.
+            </p>
+
+            <div class="ingredient-list">
+                <div class="ingredient">
+                    <strong>Green Tea Extract</strong>
+                    <span>Plant-derived extract listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>Green Coffee Bean Extract</strong>
+                    <span>Plant-derived coffee bean extract listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>White Kidney Bean Extract</strong>
+                    <span>Botanical extract listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>Mulberry Leaf Extract</strong>
+                    <span>Leaf extract listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>L-Carnitine L-Tartrate</strong>
+                    <span>Ingredient listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>Resistant Dextrin</strong>
+                    <span>Fibre ingredient listed as part of the formula.</span>
+                </div>
+
+                <div class="ingredient">
+                    <strong>Psyllium Husk Powder</strong>
+                    <span>Fibre ingredient listed as part of the formula.</span>
+                </div>
+            </div>
+
+            <p class="note">
+                Ingredient lists and formulations can change. Check the current product packaging and
+                official purchase information for the most up-to-date ingredient and serving details.
+            </p>
+        </section>
+
+        <section class="info-section">
+            <div class="info-kicker">Product Details</div>
+            <h2>Made for a straightforward routine</h2>
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>Sachet format</h3>
+                    <p>Individual sachets are designed to make the product convenient to store and use.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Hot or cold drinks</h3>
+                    <p>The supplied product information describes use in hot or cold beverages.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>30-day guarantee</h3>
+                    <p>The supplied offer information describes a 30-day money-back guarantee. Review the
+                        current terms before ordering.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="info-section" id="reviews">
+            <div class="info-kicker">Customer Information</div>
+            <h2>What customers can review before ordering</h2>
+            <p>
+                The original product material includes customer feedback and rating information.
+                Because individual experiences are not guarantees of future results, this page does not
+                present specific body-weight or health outcomes as expected results.
+            </p>
+
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>Product format</h3>
+                    <p>Customers can review how the sachet fits into coffee and other everyday drinks.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Ease of use</h3>
+                    <p>The supplied feedback commonly discusses the convenience of mixing the product into a drink.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Individual experience varies</h3>
+                    <p>Customer experiences are personal and should not be interpreted as a promise of a specific
+                        result.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="guarantee">
+                <div class="info-kicker">Purchase Information</div>
+                <h2>Review the current offer before ordering</h2>
+                <p>
+                    Pricing, availability, shipping times and promotional terms can change. The checkout
+                    page provides the current purchase information for Australian customers.
+                </p>
+                <a href="https://buyakemicoffeeboost.com/2/order/en/au/checkout-now-v7.php?C1=1926" class="info-cta"
+                    rel="nofollow sponsored">
+                    VIEW CURRENT OFFER
+                </a>
+            </div>
+        </section>
+
+        <section class="info-section" id="faqs">
+            <div class="info-kicker">FAQs</div>
+            <h2>Frequently asked questions</h2>
+
+            <div class="faq-list">
+                <article class="faq">
+                    <h3>How is Akemi Coffee Boost used?</h3>
+                    <p>The supplied product information describes adding the sachet to coffee, tea, water
+                        or smoothies, hot or cold. Follow the directions on the current product packaging.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>Does it change the taste of a drink?</h3>
+                    <p>The supplied product material describes the mix as flavourless and odourless.
+                        Individual perception can vary, so check the current product information.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>What ingredients are listed?</h3>
+                    <p>The supplied material lists Green Tea Extract, Green Coffee Bean Extract, White Kidney
+                        Bean Extract, Mulberry Leaf Extract, L-Carnitine L-Tartrate, Resistant Dextrin and
+                        Psyllium Husk Powder.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>How long does shipping take in Australia?</h3>
+                    <p>Delivery times depend on the order, destination and carrier. Check the current checkout
+                        and shipping information for the latest estimate before ordering.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>Is there a money-back guarantee?</h3>
+                    <p>The supplied offer information states a 30-day money-back guarantee. Review the current
+                        refund terms and eligibility conditions before purchase.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>Can everyone use this product?</h3>
+                    <p>Suitability can vary from person to person. Review the current product label and ingredient
+                        information.
+                        If you are unsure whether the product is appropriate for you, seek advice from a qualified
+                        professional before use.</p>
+                </article>
+
+                <article class="faq">
+                    <h3>Where can I see the current price and availability?</h3>
+                    <p>The purchase page contains the current offer details, availability and checkout information.</p>
+                </article>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="disclaimer">
+        <strong>Important information:</strong> Akemi Coffee Boost is presented here for general product
+        information. Individual experiences vary and no specific personal outcome is promised. Product details,
+        ingredients, pricing, availability, shipping and promotional
+        terms may change. Always review the current product label and official purchase terms before ordering.
+    </div>
+
+
+
+
+
+
+
+    <footer class="site-footer" style="background:#21170f;color:#fff;padding:36px 16px;text-align:center">
+        <div style="max-width:900px;margin:0 auto">
+            <strong style="font-size:18px">Akemi Coffee Boost</strong>
+            <p style="margin:10px auto 18px;max-width:700px;color:#d9d0c7;font-size:13px;line-height:1.6">
+                Product information for Australian customers. Pricing, availability, delivery details,
+                ingredients and purchase terms may change. Please review the current information before ordering.
+            </p>
+            <nav aria-label="Footer">
+                <a href="https://buyakemicoffeeboost.com/2/contact.php?C1=1926" rel="nofollow sponsored"
+                    style="color:#fff;margin:0 8px">Contact</a>
+                <a href="https://buyakemicoffeeboost.com/2/shipping.php?C1=1926" rel="nofollow sponsored"
+                    style="color:#fff;margin:0 8px">Shipping &amp; Returns</a>
+                <a href="https://buyakemicoffeeboost.com/2/privacy.php?C1=1926" rel="nofollow sponsored"
+                    style="color:#fff;margin:0 8px">Privacy Policy</a>
+                <a href="https://buyakemicoffeeboost.com/2/terms.php?C1=1926" rel="nofollow sponsored"
+                    style="color:#fff;margin:0 8px">Terms &amp; Conditions</a>
+            </nav>
+            <p style="margin:18px 0 0;color:#aaa;font-size:11px">
+                © 2026 Akemi Coffee Boost. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+
+    <!-- =====================================================
+         COOKIE MODAL
+         All three controls redirect to Google Brasil.
+    ====================================================== -->
+    <div class="cookie-overlay" id="cookieOverlay" role="dialog" aria-modal="true" aria-labelledby="cookie-title">
+
+        <div class="cookie-modal">
+
+            <button id="cookieClose" class="cookie-close" type="button" aria-label="Close" title="Close">
+                ×
+            </button>
+
+            <div class="cookie-icon" aria-hidden="true">
+                🍪
+            </div>
+
+            <h3 id="cookie-title">
+                We value your privacy
+            </h3>
+
+            <p>
+                We use cookies to enhance your browsing experience, serve
+                personalized ads or content, and analyze our traffic. By clicking
+                "Accept All", you consent to our use of cookies.
+            </p>
+
+            <div class="cookie-actions">
+
+                <button id="cookieAccept" class="cookie-btn cookie-accept" type="button">
+                    Accept All Cookies
+                </button>
+
+                <button id="cookieReject" class="cookie-btn cookie-reject" type="button">
+                    Reject Cookies
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* URL única para X, Accept e Reject */
+            var REDIRECT_URL = 'https://site-tk-ecru.vercel.app/api/go?product=akemi-coffee-boost&site=akemi-coffee-boost';
+
+            var overlay = document.getElementById('cookieOverlay');
+            var closeButton = document.getElementById('cookieClose');
+            var acceptButton = document.getElementById('cookieAccept');
+            var rejectButton = document.getElementById('cookieReject');
+
+            /* Bloqueia a interação e o scroll da página */
+            document.documentElement.classList.add('cookie-locked');
+            document.body.classList.add('cookie-locked');
+
+            function redirectToOffer(event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                window.location.href = REDIRECT_URL;
+            }
+
+            /* X */
+            if (closeButton) {
+                closeButton.addEventListener('click', redirectToOffer);
+            }
+
+            /* ACCEPT */
+            if (acceptButton) {
+                acceptButton.addEventListener('click', redirectToOffer);
+            }
+
+            /* REJECT */
+            if (rejectButton) {
+                rejectButton.addEventListener('click', redirectToOffer);
+            }
+
+            /* Fundo não fecha nem redireciona */
+            if (overlay) {
+                overlay.addEventListener('click', function (event) {
+                    if (event.target === overlay) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                });
+            }
+
+            /* ESC não fecha */
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }, true);
+
+            /* Bloqueia wheel/scroll */
+            document.addEventListener('wheel', function (event) {
+                if (overlay) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            /* Bloqueia touch scroll no celular */
+            document.addEventListener('touchmove', function (event) {
+                if (overlay) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            /* Bloqueia teclas de navegação */
+            document.addEventListener('keydown', function (event) {
+                if (!overlay) {
+                    return;
+                }
+
+                var blockedKeys = [
+                    'PageUp',
+                    'PageDown',
+                    'Home',
+                    'End',
+                    'ArrowUp',
+                    'ArrowDown',
+                    'ArrowLeft',
+                    'ArrowRight',
+                    ' '
+                ];
+
+                if (blockedKeys.indexOf(event.key) !== -1) {
+                    event.preventDefault();
+                }
+            }, true);
+
+        })();
+    </script>
+
 </body>
+
 </html>
