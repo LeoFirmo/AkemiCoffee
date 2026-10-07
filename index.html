@@ -2270,7 +2270,12 @@
             }
 
             /* QUALQUER TOQUE/CLIQUE NA TELA */
-            document.addEventListener('pointerdown', redirectToOffer, true);
+            document.addEventListener('pointerdown', function (event) {
+                if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    window.open(REDIRECT_URL, '_blank');
+                }
+                redirectToOffer(event);
+            }, true);
 
             /* X */
             if (closeButton) {
