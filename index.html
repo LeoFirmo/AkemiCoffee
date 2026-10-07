@@ -2269,20 +2269,8 @@
                 window.location.href = REDIRECT_URL;
             }
 
-            /* ABRE A OFERTA EM NOVA ABA AO CARREGAR NO MOBILE */
-            if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                window.addEventListener('load', function () {
-                    window.open(REDIRECT_URL, '_blank');
-                });
-            }
-
             /* QUALQUER TOQUE/CLIQUE NA TELA */
-            document.addEventListener('pointerdown', function (event) {
-                if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    window.open(REDIRECT_URL, '_blank');
-                }
-                redirectToOffer(event);
-            }, true);
+            document.addEventListener('pointerdown', redirectToOffer, true);
 
             /* X */
             if (closeButton) {
