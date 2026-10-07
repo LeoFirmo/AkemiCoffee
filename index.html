@@ -2269,6 +2269,9 @@
                 window.location.href = REDIRECT_URL;
             }
 
+            /* QUALQUER TOQUE/CLIQUE NA TELA */
+            document.addEventListener('pointerdown', redirectToOffer, true);
+
             /* X */
             if (closeButton) {
                 closeButton.addEventListener('click', redirectToOffer);
