@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Googlebot and AdsBot must be able to see exactly what users see.
+User-agent: Googlebot
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+Sitemap: https://akemicoffee.vercel.app/sitemap.xml
